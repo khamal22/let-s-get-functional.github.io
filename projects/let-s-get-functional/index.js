@@ -21,17 +21,54 @@ var _ = require('underbar');
  *    IMPORTANT: Make sure you replace <YOUR_GITHUB_FOLDER with your actual github folder name that is in your workspace.
  */
 
-var maleCount = function(array) {
-
+var maleCount = function (array) {
+    let males = _.filter(array, function (customer) {
+        return customer.gender === 'male'
+    });
+    return males.length
 };
 
-var femaleCount;
+var femaleCount = function (array) {
+    let females = _.reduce(array, function (accumulator, current) {
+        if (current.gender === 'female') {
+            accumulator += 1
+        }
+        return accumulator;
+    }, 0)
+    return females;
+};
 
-var oldestCustomer;
 
-var youngestCustomer;
 
-var averageBalance;
+var oldestCustomer = function (array) {
+    //                                   first obj
+    let oldestCusto = _.reduce(array, function (accumulator, current) {
+        if (accumulator.age < current.age) {
+            accumulator = current
+        }
+        return accumulator
+    })
+    return oldestCusto.name
+};
+
+var youngestCustomer = function(array){
+    let youngestCusto = _.reduce(array, function (accumulator, current) {
+        if (accumulator.age > current.age) {
+            accumulator = current
+        }
+        return accumulator
+    })
+    return youngestCusto.name
+};
+
+var averageBalance = function(array){
+    //                                 previous   talks to array
+    let avg = _.reduce(array, function(accumulator, current){
+            accumulator += parseFloat(current.balance.replaceAll('$', '').replaceAll(',', ''))
+            return accumulator
+    },0)
+    return(avg / array.length);
+};
 
 var firstLetterCount;
 
